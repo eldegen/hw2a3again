@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">hw2a3again</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_blank">Title</string>
+    <string name="userid_blank">0</string>
+    <string name="content_blank">Content</string>
+    <string name="post_btn_text">Post</string>
+</resources>
