@@ -47,29 +47,61 @@ public class FormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.btnPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String bufferTitle = binding.edTitle.getText().toString();
-                String bufferContent = binding.edContent.getText().toString();
+        if (getArguments() == null) {
+            binding.btnPost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String bufferTitle = binding.edTitle.getText().toString();
+                    String bufferContent = binding.edContent.getText().toString();
 
-                Post post = new Post(bufferTitle, bufferContent, GROUP_ID, USER_ID);
-                App.api.createPost(post).enqueue(new Callback<Post>() {
-                    @Override
-                    public void onResponse(Call<Post> call, Response<Post> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getContext(), "Successfully posted!", Toast.LENGTH_SHORT).show();
-                            requireActivity().onBackPressed();
+                    Post post = new Post(bufferTitle, bufferContent, GROUP_ID, USER_ID);
+                    App.api.createPost(post).enqueue(new Callback<Post>() {
+                        @Override
+                        public void onResponse(Call<Post> call, Response<Post> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(getContext(), "Successfully posted!", Toast.LENGTH_SHORT).show();
+                                requireActivity().onBackPressed();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Post> call, Throwable t) {
-                        Toast.makeText(getContext(), "Failed to post this message! (" + t + ")", Toast.LENGTH_SHORT).show();
-                        Log.e("f_global", "onFailure: " + t);
-                    }
-                });
-            }
-        });
+                        @Override
+                        public void onFailure(Call<Post> call, Throwable t) {
+                            Toast.makeText(getContext(), "Failed to post this message! (" + t + ")", Toast.LENGTH_SHORT).show();
+                            Log.e("f_global", "onFailure: " + t);
+                        }
+                    });
+                }
+            });
+        } else {
+            String bufferTitle = getArguments().getString("getTitle");
+            String bufferContent = getArguments().getString("getContent");
+            int bufferUserId = getArguments().getInt("getUser");
+            int bufferGroupId = getArguments().getInt("getGroup");
+
+            binding.edTitle.setText(bufferTitle);
+            binding.edContent.setText(bufferContent);
+
+            int bufferId = getArguments().getInt("getId");
+
+            binding.btnPost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    App.api.updatePost(bufferId, bufferTitle, bufferContent, bufferUserId, bufferGroupId).enqueue(new Callback<Post>() {
+                        @Override
+                        public void onResponse(Call<Post> call, Response<Post> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(getContext(), "Successfully posted!", Toast.LENGTH_SHORT).show();
+                                requireActivity().onBackPressed();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Post> call, Throwable t) {
+
+                        }
+                    });
+                }
+            });
+        }
     }
 }

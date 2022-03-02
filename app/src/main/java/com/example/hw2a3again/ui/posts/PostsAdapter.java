@@ -1,17 +1,21 @@
 package com.example.hw2a3again.ui.posts;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hw2a3again.App;
+import com.example.hw2a3again.R;
 import com.example.hw2a3again.data.models.Post;
 import com.example.hw2a3again.databinding.ItemPostBinding;
 
@@ -70,6 +74,20 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         .show();
 
                 return false;
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("getId", posts.get(position).getId());
+                bundle.putString("getTitle", posts.get(position).getTitle());
+                bundle.putString("getContent", posts.get(position).getContent());
+                bundle.putInt("getUser", posts.get(position).getUserId());
+                bundle.putInt("getGroup", posts.get(position).getGroupId());
+
+                Navigation.findNavController((Activity) v.getContext(), R.id.nav_host_fragment).navigate(R.id.formFragment, bundle);
             }
         });
     }

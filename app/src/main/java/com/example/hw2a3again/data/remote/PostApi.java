@@ -8,6 +8,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -21,10 +23,14 @@ public interface PostApi {
     @POST("posts")
     Call<Post> createPost(@Body Post post);
 
+    @FormUrlEncoded
     @PUT("posts/{id}")
     Call<Post> updatePost(
             @Path("id") int id,
-            @Body Post post
+            @Field("title") String title,
+            @Field("content") String content,
+            @Field("user") int userId,
+            @Field("group") int groupId
     );
 
     @DELETE("posts/{id}")
