@@ -20,6 +20,7 @@ import com.example.hw2a3again.data.models.Post;
 import com.example.hw2a3again.databinding.ItemPostBinding;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -105,7 +106,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         }
 
         public void onBind(Post post) {
-            binding.tvUserId.setText(String.valueOf(post.getUserId()));
+            HashMap<Integer, String> names = new HashMap<>();
+            names.put(0, "Server");
+            names.put(13, "Eldeg");
+            String bufferName = names.getOrDefault(post.getUserId(), "Someone else");
+
+            binding.tvUserId.setText(bufferName);
             binding.tvTitle.setText(post.getTitle());
             binding.tvContent.setText(post.getContent());
         }

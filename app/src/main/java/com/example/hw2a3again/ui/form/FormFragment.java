@@ -1,5 +1,6 @@
 package com.example.hw2a3again.ui.form;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,7 @@ public class FormFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -73,6 +75,8 @@ public class FormFragment extends Fragment {
                 }
             });
         } else {
+            binding.btnPost.setText("Update");
+
             Post post2 = new Post(
                     getArguments().getString("getTitle"),
                     getArguments().getString("getContent"),
