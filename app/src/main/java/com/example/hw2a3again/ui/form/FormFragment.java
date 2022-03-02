@@ -73,20 +73,24 @@ public class FormFragment extends Fragment {
                 }
             });
         } else {
-            String bufferTitle = getArguments().getString("getTitle");
-            String bufferContent = getArguments().getString("getContent");
-            int bufferUserId = getArguments().getInt("getUser");
-            int bufferGroupId = getArguments().getInt("getGroup");
+            Post post2 = new Post(
+                    getArguments().getString("getTitle"),
+                    getArguments().getString("getContent"),
+                    getArguments().getInt("getGroup"),
+                    getArguments().getInt("getUser"));
 
-            binding.edTitle.setText(bufferTitle);
-            binding.edContent.setText(bufferContent);
+            binding.edTitle.setText(post2.getTitle());
+            binding.edContent.setText(post2.getContent());
 
             int bufferId = getArguments().getInt("getId");
 
             binding.btnPost.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    App.api.updatePost(bufferId, bufferTitle, bufferContent, bufferUserId, bufferGroupId).enqueue(new Callback<Post>() {
+                    post2.setTitle(binding.edTitle.getText().toString());
+                    post2.setContent(binding.edContent.getText().toString());
+
+                    App.api.updatePost(bufferId, post2).enqueue(new Callback<Post>() {
                         @Override
                         public void onResponse(Call<Post> call, Response<Post> response) {
                             if (response.isSuccessful()) {

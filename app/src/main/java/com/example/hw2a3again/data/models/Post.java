@@ -37,4 +37,24 @@ public class Post {
     public int getUserId() {
         return userId;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 }
